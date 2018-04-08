@@ -75,13 +75,19 @@ def main():
 
     # union the two df's to a common one
   df_all = pd.concat( [df_physPerform, df_physComp], ignore_index=True)
-
   print( "\ndf_all.columns = ")
   print( df_all.columns)
     
     # kill old frames to conserve memory
   del df_physPerform
   del df_physComp
+
+    # union against Group * PAC ID, sort first
+  df_grpExp.sort_values(by=['Group PAC ID'])
+  df_grpPerform.sort_values(by=['Group PAC ID'])
+  df_g_pac = pd.concat( [df_grpExp, df_grpPerform], ignore_index=True)
+  print( "\ndf_g_pac.columns = ")
+  print( df_g_pac.columns)
 
   #Solutions on github for Data Incubator Challenge 2:
     #https://github.com/MehtaShruti/The-Data-Incubator-Physicians-Compare-and-NYC-Parking-Ticket/blob/master/ChallengeQuestion_2.ipynb
