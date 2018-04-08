@@ -69,9 +69,19 @@ def main():
 
 
   # Union data sets into one unified set
-    # first sort all data by a common meaure; PAC ID
+    # first sort data by a common meaure; PAC ID
   df_physPerform.sort_values(by=['PAC ID'])
   df_physComp.sort_values(by=['PAC ID'])
+
+    # union the two df's to a common one
+  df_all = pd.concat( [df_physPerform, df_physComp], ignore_index=True)
+
+  print( "\ndf_all.columns = ")
+  print( df_all.columns)
+    
+    # kill old frames to conserve memory
+  del df_physPerform
+  del df_physComp
 
   #Solutions on github for Data Incubator Challenge 2:
     #https://github.com/MehtaShruti/The-Data-Incubator-Physicians-Compare-and-NYC-Parking-Ticket/blob/master/ChallengeQuestion_2.ipynb
