@@ -89,6 +89,10 @@ def main():
   print( "\ndf_g_pac.columns = ")
   print( df_g_pac.columns)
 
+    # kill old frams to conserve memory
+  del df_grpExp
+  del grpPerform
+
   #Solutions on github for Data Incubator Challenge 2:
     #https://github.com/MehtaShruti/The-Data-Incubator-Physicians-Compare-and-NYC-Parking-Ticket/blob/master/ChallengeQuestion_2.ipynb
     #https://github.com/rrpastro/data_incubator/blob/4b0ef3e6207cf41d5a04bbb113d71c157b713090/challenge2_final.ipynb
