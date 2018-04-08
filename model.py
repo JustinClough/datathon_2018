@@ -58,8 +58,20 @@ def main():
   numNull = df_physComp.isnull().sum(axis=0)
   print("Number of null/emply data entries for each column: \n",numNull)
 
+  print( "\ndf_grpExp.columns = ")
+  print( df_grpExp.columns)
+  print( "\ndf_grpPerform.columns = ")
+  print( df_grpPerform.columns)
+  print( "\ndf_physPerform.columns = ")
+  print( df_physPerform.columns)
+  print( "\ndf_physComp.columns = ")
+  print( df_physComp.columns)
+
 
   # Union data sets into one unified set
+    # first sort all data by a common meaure; PAC ID
+  df_physPerform.sort_values(by=['PAC ID'])
+  df_physComp.sort_values(by=['PAC ID'])
 
   #Solutions on github for Data Incubator Challenge 2:
     #https://github.com/MehtaShruti/The-Data-Incubator-Physicians-Compare-and-NYC-Parking-Ticket/blob/master/ChallengeQuestion_2.ipynb
