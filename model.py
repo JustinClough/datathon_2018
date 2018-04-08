@@ -70,28 +70,43 @@ def main():
 
   # Union data sets into one unified set
     # first sort data by a common meaure; PAC ID
-  df_physPerform.sort_values(by=['PAC ID'])
-  df_physComp.sort_values(by=['PAC ID'])
+  df_tmp = df_physPerform
+  df_tmp.set_index('PAC ID').join(df_physComp.set_index('PAC ID'), lsuffix='_df_physPerform', rsuffix='_dfphysComp')
 
     # union the two df's to a common one
-  df_all = pd.concat( [df_physPerform, df_physComp], ignore_index=True)
-  print( "\ndf_all.columns = ")
-  print( df_all.columns)
+  print( "\ndf_tmp.columns = ")
+  print( df_tmp.columns)
     
     # kill old frames to conserve memory
   del df_physPerform
   del df_physComp
 
     # union against Group * PAC ID, sort first
-  df_grpExp.sort_values(by=['Group PAC ID'])
-  df_grpPerform.sort_values(by=['Group PAC ID'])
-  df_g_pac = pd.concat( [df_grpExp, df_grpPerform], ignore_index=True)
+  df_g_pac = df_grpExp
+  df_g_pac.set_index('Group PAC ID').join(df_grpPerform.set_index('Group PAC ID'), lsuffix='_df_grpExp', rsuffix='_grpPerform')
+
+  ####################
+  ## May want to separately handle group information at this point
+  ####################
+
   print( "\ndf_g_pac.columns = ")
   print( df_g_pac.columns)
 
     # kill old frams to conserve memory
   del df_grpExp
-  del grpPerform
+  del df_grpPerform
+
+    # rename verbose to match
+  df_tmp.rename( columns={'Group Practice PAC ID':'Group PAC ID'}, inplace=True)
+
+    # union to one final dataframe
+  df_all = pd.concat( [df_g_pac, df_tmp], ignore_index=True)
+  print( "\ndf_all.columns = ")
+  print( df_all.columns)
+
+  print( df_all.head())
+
+  return df_all
 
   #Solutions on github for Data Incubator Challenge 2:
     #https://github.com/MehtaShruti/The-Data-Incubator-Physicians-Compare-and-NYC-Parking-Ticket/blob/master/ChallengeQuestion_2.ipynb
@@ -141,4 +156,6 @@ def main():
     #have equal variance.
 
 if __name__=='__main__':
-  main()
+  df = main()
+
+
